@@ -51,7 +51,12 @@ export default class Home extends React.Component {
       size: 7
     };
   }
-
+  clearLink = () => {
+    this.setState({
+      imageLink: '',
+      codeLink: ''
+    });
+  };
   handleLeadInTextUpdate = e => {
     const { value } = e.target;
     this.setState({
@@ -286,6 +291,9 @@ export default class Home extends React.Component {
                 placeholder='QR Code URL'
                 variant='outlined'
               />
+              <Button onClick={this.clearLink} variant='outlined'>
+                Clear Links
+              </Button>
               <br />
               <br />
               <br />
