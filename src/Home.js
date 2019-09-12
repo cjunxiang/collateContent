@@ -144,7 +144,16 @@ export default class Home extends React.Component {
       codeLink: e.target.value
     });
   };
-
+  clearTexts = () => {
+    this.setState({
+      leadInText: '',
+      mainText: '',
+      date: '',
+      location: '',
+      price: '',
+      priceDetail: ''
+    });
+  };
   refreshOutput = () => {
     const {
       leadInText,
@@ -201,6 +210,10 @@ export default class Home extends React.Component {
               Let's go to 247Ticket's Website!
             </Button>
             <br />
+            <hr />
+            <Button onClick={this.clearTexts} variant='outlined'>
+              Clear Inputs
+            </Button>
             <br />
             <div>
               <h> Lead-in Text (Optional) </h>
@@ -219,7 +232,7 @@ export default class Home extends React.Component {
               <br />
               <TextField
                 onChange={this.handleMainTextUpdate}
-                placeholder='Placeholder'
+                placeholder='Your main descriptions here'
                 multiline
                 fullWidth
                 variant='outlined'
