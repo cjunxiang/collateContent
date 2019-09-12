@@ -11,6 +11,10 @@ const Input = styled.div`
 const EndProduct = styled.div`
   width: 50%;
 `;
+
+const Homepage = styled.div`
+  font-family: comfortaa;
+`;
 const TextInputs = styled.div`
   padding: 20px;
 `;
@@ -209,17 +213,20 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <Homepage>
         <Input>
           <TextInputs>
             <Button onClick={this.open247} variant='outlined'>
               Let's go to 247Ticket's Website!
             </Button>
             <br />
+            <br />
             <hr />
+            <br />
             <Button onClick={this.clearTexts} variant='outlined'>
               Clear Inputs
             </Button>
+            <br />
             <br />
             <div>
               <h> Lead-in Text (Optional) </h>
@@ -298,9 +305,13 @@ export default class Home extends React.Component {
           <ImageInput>
             <div>
               <div>
+                <br />
                 <Button onClick={this.openGenerateQR} variant='outlined'>
                   Let's go generate a QR code!
                 </Button>
+                <br />
+                <br />
+                <hr />
                 <br />
               </div>
               <br />
@@ -368,7 +379,6 @@ export default class Home extends React.Component {
 
         <EndProduct>
           <text>Final Text (Copy Paste into WeiyouBot) </text>
-          <Button variant='outlined'>Copy</Button>
           <br />
           <TextField
             value={this.state.output}
@@ -377,7 +387,7 @@ export default class Home extends React.Component {
             variant='outlined'
           />
         </EndProduct>
-      </div>
+      </Homepage>
     );
   }
 }
