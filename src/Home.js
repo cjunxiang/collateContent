@@ -50,7 +50,13 @@ export default class Home extends React.Component {
       rightPercent: 36,
       size: 7,
       imageLink: '',
-      codeLink: ''
+      codeLink: '',
+      leadInText: '',
+      mainText: '',
+      date: '',
+      location: '',
+      price: '',
+      priceDetail: ''
     };
   }
   clearLink = () => {
@@ -220,6 +226,7 @@ export default class Home extends React.Component {
               <br />
               <TextField
                 onChange={this.handleLeadInTextUpdate}
+                value={this.state.leadInText}
                 placeholder='Lead up Text'
                 fullWidth
                 variant='outlined'
@@ -232,6 +239,7 @@ export default class Home extends React.Component {
               <br />
               <TextField
                 onChange={this.handleMainTextUpdate}
+                value={this.state.mainText}
                 placeholder='Your main descriptions here'
                 multiline
                 fullWidth
@@ -246,6 +254,7 @@ export default class Home extends React.Component {
               <br />
               <TextField
                 placeholder='What date is the event?'
+                value={this.state.date}
                 onChange={this.handleDateChange}
                 variant='outlined'
               />
@@ -257,6 +266,7 @@ export default class Home extends React.Component {
               <br />
               <TextField
                 onChange={this.handleLocationUpdate}
+                value={this.state.location}
                 placeholder='Where is this event?'
                 variant='outlined'
               />
@@ -269,11 +279,13 @@ export default class Home extends React.Component {
               <TextField
                 placeholder='Lowest price (RMB)'
                 type='number'
+                value={this.state.price}
                 onChange={this.handlePriceChange}
                 variant='outlined'
               />
               <TextField
                 placeholder='Additional Details (e.g. Student Price)'
+                value={this.state.priceDetail}
                 onChange={this.handlePriceDetailsChange}
                 variant='outlined'
               />
