@@ -166,7 +166,7 @@ export default class Home extends React.Component {
 
     let result;
     let newPrice;
-    if (priceDetail !== undefined) {
+    if (priceDetail !== undefined || priceDetail !== '') {
       newPrice = price + 'RMB (' + priceDetail + ')';
     } else {
       newPrice = price + 'RMB';
@@ -192,7 +192,7 @@ export default class Home extends React.Component {
       emoji.get('camera_with_flash') +
       'Extract the QR code to open our mini program and find out more!';
 
-    if (leadInText !== undefined) {
+    if (leadInText !== undefined || leadInText !== '') {
       result = leadInText + '\n\n' + result;
     }
 
