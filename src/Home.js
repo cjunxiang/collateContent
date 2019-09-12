@@ -6,7 +6,7 @@ import emoji from 'node-emoji';
 
 const Input = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
 `;
 
 const TextInputs = styled.div`
@@ -14,25 +14,36 @@ const TextInputs = styled.div`
 `;
 
 const ImageInput = styled.div`
-  padding: 20px;
   display: grid;
   grid-template-columns: 1fr 2fr;
-`;
-const FinalPoster = styled.img`
-  z-index: 9;
   width: 100%;
 `;
 
+const ImagesDiv = styled.div`
+  border-style: dotted;
+`;
+
 const QRCode = styled.img`
+  top: ${({ topPercent }) => topPercent}%;
+  right: ${({ rightPercent }) => rightPercent}%;
+  position: absolute;
+  width: ${({ size }) => size}%;
   z-index: 10;
-  width: 30%;
+`;
+
+const FinalPoster = styled.img`
+  position: absolute;
+  width: 35%;
+  z-index: 9;
 `;
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      output: ''
+      topPercent: 77,
+      rightPercent: 36,
+      size: 7
     };
   }
 
@@ -51,11 +62,47 @@ export default class Home extends React.Component {
   open247 = () => {
     window.open('http://www.247tickets.com', '_blank');
   };
+  shiftUp = () => {
+    this.setState({
+      topPercent: this.state.topPercent - 1
+    });
+  };
+  shiftDown = () => {
+    this.setState({
+      topPercent: this.state.topPercent + 1
+    });
+  };
+  shiftRight = () => {
+    this.setState({
+      rightPercent: this.state.rightPercent - 1
+    });
+  };
+  shiftLeft = () => {
+    this.setState({
+      rightPercent: this.state.rightPercent + 1
+    });
+  };
+  upSize = () => {
+    this.setState({
+      size: this.state.size + 0.3
+    });
+  };
 
+  downSize = () => {
+    this.setState({
+      size: this.state.size - 0.3
+    });
+  };
   handleMainTextUpdate = e => {
     const { value } = e.target;
     this.setState({
       mainText: value.trim()
+    });
+  };
+  handlePriceDetailsChange = e => {
+    const { value } = e.target;
+    this.setState({
+      priceDetail: value
     });
   };
   handleLocationUpdate = e => {
@@ -76,26 +123,39 @@ export default class Home extends React.Component {
   };
   refreshPicture = e => {
     this.setState({
-      imageLink: e.target.value.trim()
+      imageLink: e.target.value
     });
   };
+  generateNewPicture = () => {};
 
   refreshCode = e => {
     this.setState({
-      codeLink: e.target.value.trim()
+      codeLink: e.target.value
     });
   };
 
   refreshOutput = () => {
-    const { leadInText, mainText, date, location, price } = this.state;
+    const {
+      leadInText,
+      mainText,
+      date,
+      location,
+      price,
+      priceDetail
+    } = this.state;
 
     let result;
+    let newPrice;
+    if (priceDetail !== undefined) {
+      newPrice = price + 'RMB (' + priceDetail + ')';
+    } else {
+      newPrice = price + 'RMB';
+    }
     result =
       mainText +
       '\n' +
       '\n' +
       emoji.get('stopwatch') +
-      ' ' +
       date +
       '\n' +
       emoji.get('round_pushpin') +
@@ -105,8 +165,7 @@ export default class Home extends React.Component {
       emoji.get('moneybag') +
       ' ' +
       'From ' +
-      price +
-      ' RMB' +
+      newPrice +
       '\n' +
       '\n' +
       emoji.get('camera_with_flash') +
@@ -114,7 +173,7 @@ export default class Home extends React.Component {
       'Extract the QR code to open our mini program and find out more!';
 
     if (leadInText !== undefined) {
-      result = leadInText + result;
+      result = leadInText + '\n\n' + result;
     }
 
     this.setState({
@@ -133,7 +192,7 @@ export default class Home extends React.Component {
             <br />
             <br />
             <div>
-              <text> Lead-in Text (Optional) </text>
+              <h> Lead-in Text (Optional) </h>
               <br />
               <TextField
                 onChange={this.handleLeadInTextUpdate}
@@ -145,7 +204,7 @@ export default class Home extends React.Component {
             <br />
 
             <div>
-              <text> Main Description </text>
+              <h> Main Description </h>
               <br />
               <TextField
                 onChange={this.handleMainTextUpdate}
@@ -159,19 +218,18 @@ export default class Home extends React.Component {
 
             <div>
               <br />
-              <text> Date (and Time) </text>
+              <h> Date (and Time) </h>
               <br />
               <TextField
                 placeholder='What date is the event?'
                 onChange={this.handleDateChange}
                 variant='outlined'
               />
-              {/* <DateRangePicker /> */}
             </div>
 
             <div>
               <br />
-              <text> Place </text>
+              <h> Place </h>
               <br />
               <TextField
                 onChange={this.handleLocationUpdate}
@@ -182,7 +240,7 @@ export default class Home extends React.Component {
 
             <div>
               <br />
-              <text> Price and additional details </text>
+              <h> Price and additional details </h>
               <br />
               <TextField
                 placeholder='Lowest price (RMB)'
@@ -192,6 +250,7 @@ export default class Home extends React.Component {
               />
               <TextField
                 placeholder='Additional Details (e.g. Student Price)'
+                onChange={this.handlePriceDetailsChange}
                 variant='outlined'
               />
             </div>
@@ -209,7 +268,7 @@ export default class Home extends React.Component {
                 <br />
               </div>
               <br />
-              <text> Poster URL </text> <br />
+              <h> Poster URL </h> <br />
               <TextField
                 onChange={this.refreshPicture}
                 placeholder='Poster URL'
@@ -217,18 +276,40 @@ export default class Home extends React.Component {
               />
               <br />
               <br />
-              <text> QR Code URL </text> <br />
+              <h> QR Code URL </h> <br />
               <TextField
                 onChange={this.refreshCode}
                 placeholder='QR Code URL'
                 variant='outlined'
               />
               <br />
+              <br />
+              <Button onClick={this.generateNewPicture}>
+                Generate Picture
+              </Button>
+              <br />
+              <text>Shift the Qr Codes</text> <br />
+              <Button onClick={this.shiftUp}>Up</Button>
+              <br />
+              <Button onClick={this.shiftLeft}>left</Button>
+              <Button onClick={this.shiftDown}>down</Button>
+              <Button onClick={this.shiftRight}>right</Button>
+              <br />
+              <Button onClick={this.upSize}>upSize</Button>
+              <Button onClick={this.downSize}>downSize</Button>
+              <br />
             </div>
-            <div>
+            <ImagesDiv>
+              <br />
               <FinalPoster src={this.state.imageLink} />
-              <QRCode src={this.state.codeLink} />
-            </div>
+              <QRCode
+                topPercent={this.state.topPercent}
+                rightPercent={this.state.rightPercent}
+                size={this.state.size}
+                src={this.state.codeLink}
+                alt='qrcode'
+              />
+            </ImagesDiv>
           </ImageInput>
         </Input>
 
