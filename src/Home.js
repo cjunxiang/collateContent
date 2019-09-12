@@ -48,7 +48,9 @@ export default class Home extends React.Component {
     this.state = {
       topPercent: 77,
       rightPercent: 36,
-      size: 7
+      size: 7,
+      imageLink: '',
+      codeLink: ''
     };
   }
   clearLink = () => {
@@ -282,6 +284,7 @@ export default class Home extends React.Component {
                 onChange={this.refreshPicture}
                 placeholder='Poster URL'
                 variant='outlined'
+                value={this.state.imageLink}
               />
               <br />
               <br />
@@ -290,6 +293,7 @@ export default class Home extends React.Component {
                 onChange={this.refreshCode}
                 placeholder='QR Code URL'
                 variant='outlined'
+                value={this.state.codeLink}
               />
               <Button onClick={this.clearLink} variant='outlined'>
                 Clear Links
