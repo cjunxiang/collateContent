@@ -171,11 +171,11 @@ export default class Home extends React.Component {
     } = this.state;
 
     let result;
-    let newPrice;
-    if (priceDetail !== undefined || priceDetail !== '') {
-      newPrice = price + 'RMB (' + priceDetail + ')';
-    } else {
+    let newPrice = '';
+    if (priceDetail === undefined || priceDetail === '') {
       newPrice = price + 'RMB';
+    } else {
+      newPrice = price + 'RMB (' + priceDetail + ')';
     }
     result =
       mainText +
