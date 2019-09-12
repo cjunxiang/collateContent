@@ -8,11 +8,16 @@ const Input = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
 `;
-
+const EndProduct = styled.div`
+  width: 50%;
+`;
 const TextInputs = styled.div`
   padding: 20px;
 `;
-
+const UpButton = styled(Button)`
+  left: 20%;
+  position: relative;
+`;
 const ImageInput = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -64,12 +69,12 @@ export default class Home extends React.Component {
   };
   shiftUp = () => {
     this.setState({
-      topPercent: this.state.topPercent - 1
+      topPercent: this.state.topPercent - 3
     });
   };
   shiftDown = () => {
     this.setState({
-      topPercent: this.state.topPercent + 1
+      topPercent: this.state.topPercent + 3
     });
   };
   shiftRight = () => {
@@ -126,7 +131,6 @@ export default class Home extends React.Component {
       imageLink: e.target.value
     });
   };
-  generateNewPicture = () => {};
 
   refreshCode = e => {
     this.setState({
@@ -284,19 +288,29 @@ export default class Home extends React.Component {
               />
               <br />
               <br />
-              <Button onClick={this.generateNewPicture}>
-                Generate Picture
-              </Button>
               <br />
               <text>Shift the Qr Codes</text> <br />
-              <Button onClick={this.shiftUp}>Up</Button>
+              <UpButton onClick={this.shiftUp} variant='outlined'>
+                Up
+              </UpButton>
               <br />
-              <Button onClick={this.shiftLeft}>left</Button>
-              <Button onClick={this.shiftDown}>down</Button>
-              <Button onClick={this.shiftRight}>right</Button>
+              <Button onClick={this.shiftLeft} variant='outlined'>
+                left
+              </Button>
+              <Button onClick={this.shiftDown} variant='outlined'>
+                down
+              </Button>
+              <Button onClick={this.shiftRight} variant='outlined'>
+                right
+              </Button>
               <br />
-              <Button onClick={this.upSize}>upSize</Button>
-              <Button onClick={this.downSize}>downSize</Button>
+              <hr />
+              <Button onClick={this.upSize} variant='outlined'>
+                Bigger!
+              </Button>
+              <Button onClick={this.downSize} variant='outlined'>
+                Smaller
+              </Button>
               <br />
             </div>
             <ImagesDiv>
@@ -315,17 +329,17 @@ export default class Home extends React.Component {
 
         <br />
 
-        <div>
+        <EndProduct>
           <text>Final Text (Copy Paste into WeiyouBot) </text>
           <Button variant='outlined'>Copy</Button>
           <br />
           <TextField
             value={this.state.output}
-            fullWidth
             multiline
+            fullWidth
             variant='outlined'
           />
-        </div>
+        </EndProduct>
       </div>
     );
   }
