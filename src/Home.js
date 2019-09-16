@@ -134,7 +134,7 @@ export default class Home extends React.Component {
   };
   handleDateChange = e => {
     this.setState({
-      date: e.target.value.trim()
+      date: e.target.value
     });
   };
 
@@ -173,7 +173,7 @@ export default class Home extends React.Component {
       price,
       priceDetail
     } = this.state;
-
+    let newDate = date.trim();
     let result;
     let newPrice = '';
     if (priceDetail === undefined || priceDetail === '') {
@@ -186,7 +186,7 @@ export default class Home extends React.Component {
       '\n' +
       '\n' +
       emoji.get('stopwatch') +
-      date +
+      newDate +
       '\n' +
       emoji.get('round_pushpin') +
       ' ' +
