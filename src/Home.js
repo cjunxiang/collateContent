@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import emoji from 'node-emoji';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRange } from 'react-date-range';
+import moment from 'moment';
 
 const Input = styled.div`
   display: grid;
@@ -60,13 +64,29 @@ export default class Home extends React.Component {
       date: '',
       location: '',
       price: '',
-      priceDetail: ''
+      priceDetail: '',
+      dateRange: {
+        selection: {
+          startDate: new Date(),
+          endDate: null,
+          key: 'selection'
+        }
+      }
     };
   }
   clearLink = () => {
     this.setState({
       imageLink: '',
       codeLink: ''
+    });
+  };
+  handleRangeChange = (which, payload) => {
+    console.log(which, payload);
+    this.setState({
+      [which]: {
+        ...this.state[which],
+        ...payload
+      }
     });
   };
   handleLeadInTextUpdate = e => {
@@ -164,16 +184,39 @@ export default class Home extends React.Component {
       priceDetail: ''
     });
   };
+
+  checkDate = () => {
+    console.log(this.state.dateRange.selection.startDate);
+    console.log(this.state.dateRange.selection.endDate);
+  };
+  validateDate = dateRange => {
+    let startDate = dateRange.selection.startDate;
+    let endDate = dateRange.selection.endDate;
+
+    let startString = this.convertDateToString(startDate);
+    let endString = this.convertDateToString(endDate);
+    if (startString === endString) {
+      return startString;
+    } else {
+      let returnString = startString + ' - ' + endString;
+      return returnString;
+    }
+  };
+
+  convertDateToString = date => {
+    return moment(date).format('MMM Do (ddd) ');
+  };
   refreshOutput = () => {
     const {
       leadInText,
       mainText,
-      date,
+      dateRange,
       location,
       price,
       priceDetail
     } = this.state;
-    let newDate = date.trim();
+
+    let newDate = this.validateDate(dateRange);
     let result;
     let newPrice = '';
     if (priceDetail === undefined || priceDetail === '') {
@@ -257,13 +300,11 @@ export default class Home extends React.Component {
 
             <div>
               <br />
-              <h> Date (and Time) </h>
+              <h onClick={this.checkDate}> Date (and Time) </h>
               <br />
-              <TextField
-                placeholder='What date is the event?'
-                value={this.state.date}
-                onChange={this.handleDateChange}
-                variant='outlined'
+              <DateRange
+                onChange={this.handleRangeChange.bind(this, 'dateRange')}
+                ranges={[this.state.dateRange.selection]}
               />
             </div>
 
