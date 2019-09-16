@@ -305,6 +305,7 @@ export default class Home extends React.Component {
               <DateRange
                 onChange={this.handleRangeChange.bind(this, 'dateRange')}
                 ranges={[this.state.dateRange.selection]}
+                minDate={new Date()}
               />
             </div>
 
