@@ -355,6 +355,10 @@ export default class Home extends React.Component {
                 <hr />
                 <br />
               </div>
+              <Button onClick={this.clearLink} variant='outlined'>
+                Clear Links
+              </Button>
+              <br />
               <br />
               <h> Poster URL </h> <br />
               <TextField
@@ -372,9 +376,6 @@ export default class Home extends React.Component {
                 variant='outlined'
                 value={this.state.codeLink}
               />
-              <Button onClick={this.clearLink} variant='outlined'>
-                Clear Links
-              </Button>
               <br />
               <br />
               <br />
