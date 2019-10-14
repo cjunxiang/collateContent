@@ -95,15 +95,6 @@ export default class Home extends React.Component {
       leadInText: value
     });
   };
-  openGenerateQR = () => {
-    window.open(
-      'https://mp.weixin.qq.com/wxamp/index/index?lang=zh_CN&token=1952068681',
-      '_blank'
-    );
-  };
-  open247 = () => {
-    window.open('http://www.247tickets.com', '_blank');
-  };
   shiftUp = () => {
     this.setState({
       topPercent: this.state.topPercent - 3
@@ -259,9 +250,6 @@ export default class Home extends React.Component {
       <Homepage>
         <Input>
           <TextInputs>
-            <Button onClick={this.open247} variant='outlined'>
-              Let's go to 247Ticket's Website!
-            </Button>
             <br />
             <br />
             <hr />
@@ -270,18 +258,6 @@ export default class Home extends React.Component {
               Clear Inputs
             </Button>
             <br />
-            <br />
-            <div>
-              <h> Lead-in Text (Optional) </h>
-              <br />
-              <TextField
-                onChange={this.handleLeadInTextUpdate}
-                value={this.state.leadInText}
-                placeholder='Lead up Text'
-                fullWidth
-                variant='outlined'
-              />
-            </div>
             <br />
 
             <div>
@@ -346,11 +322,7 @@ export default class Home extends React.Component {
           </TextInputs>
           <ImageInput>
             <div>
-              <div>
-                <br />
-                <Button onClick={this.openGenerateQR} variant='outlined'>
-                  Let's go generate a QR code!
-                </Button>
+              <div
                 <br />
                 <br />
                 <hr />
