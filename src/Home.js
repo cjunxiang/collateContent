@@ -80,6 +80,38 @@ export default class Home extends React.Component {
       codeLink: ''
     });
   };
+  scrapeWebsite = () => {
+    // const { url } = this.state;
+    const bodyObj = { url: 'kukujiao' };
+    fetch('http://localhost:8080/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(bodyObj)
+    })
+      .then(res => {
+        res.text();
+        // this.setState({
+        //   dateRange: {
+        //     selection: {
+        //       startDate: res.startDate,
+        //       endDate: res.endDate
+        //     }
+        //   },
+        //   location: res.venue,
+        //   price: res.price
+        // });
+      })
+      // .then(text => console.log(text))
+      .catch(error => console.log(`Crawling failed: ${error}`));
+  };
+
+  handleURL = e => {
+    this.setState({
+      url: e.target.value
+    });
+  };
   handleRangeChange = (which, payload) => {
     console.log(which, payload);
     this.setState({
@@ -254,6 +286,11 @@ export default class Home extends React.Component {
             <br />
             <hr />
             <br />
+            <TextField onChange={this.handleURL} variant='outlined' />
+            <Button onClick={this.scrapeWebsite} variant='outlined'>
+              scrape site
+            </Button>
+            <br />
             <Button onClick={this.clearTexts} variant='outlined'>
               Clear Inputs
             </Button>
@@ -261,7 +298,7 @@ export default class Home extends React.Component {
             <br />
 
             <div>
-              <h> Main Description </h>
+              <p> Main Description </p>
               <br />
               <TextField
                 onChange={this.handleMainTextUpdate}
@@ -276,7 +313,7 @@ export default class Home extends React.Component {
 
             <div>
               <br />
-              <h onClick={this.checkDate}> Date (and Time) </h>
+              <p onClick={this.checkDate}> Date (and Time) </p>
               <br />
               <DateRange
                 onChange={this.handleRangeChange.bind(this, 'dateRange')}
@@ -287,7 +324,7 @@ export default class Home extends React.Component {
 
             <div>
               <br />
-              <h> Place </h>
+              <p> Place </p>
               <br />
               <TextField
                 onChange={this.handleLocationUpdate}
@@ -299,7 +336,7 @@ export default class Home extends React.Component {
 
             <div>
               <br />
-              <h> Price and additional details </h>
+              <p> Price and additional details </p>
               <br />
               <TextField
                 placeholder='Lowest price (RMB)'
@@ -322,7 +359,7 @@ export default class Home extends React.Component {
           </TextInputs>
           <ImageInput>
             <div>
-              <div
+              <div>
                 <br />
                 <br />
                 <hr />
@@ -333,7 +370,7 @@ export default class Home extends React.Component {
               </Button>
               <br />
               <br />
-              <h> Poster URL </h> <br />
+              <p> Poster URL </p> <br />
               <TextField
                 onChange={this.refreshPicture}
                 placeholder='Poster URL'
@@ -342,7 +379,7 @@ export default class Home extends React.Component {
               />
               <br />
               <br />
-              <h> QR Code URL </h> <br />
+              <p> QR Code URL </p> <br />
               <TextField
                 onChange={this.refreshCode}
                 placeholder='QR Code URL'
@@ -352,7 +389,7 @@ export default class Home extends React.Component {
               <br />
               <br />
               <br />
-              <text>Shift the Qr Codes</text> <br />
+              <p>Shift the Qr Codes</p> <br />
               <UpButton onClick={this.shiftUp} variant='outlined'>
                 Up
               </UpButton>
@@ -393,7 +430,7 @@ export default class Home extends React.Component {
         <br />
 
         <EndProduct>
-          <text>Final Text (Copy Paste into WeiyouBot) </text>
+          <p>Final Text (Copy Paste into WeiyouBot) </p>
           <br />
           <TextField
             value={this.state.output}
